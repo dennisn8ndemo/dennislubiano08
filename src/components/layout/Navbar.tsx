@@ -33,7 +33,7 @@ export const Navbar = () => {
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <a href="#home" className="text-2xl font-bold text-gradient">
+        <a href="#home" className="text-3xl font-bold text-gradient">
           Dennis Lubiano
         </a>
 
