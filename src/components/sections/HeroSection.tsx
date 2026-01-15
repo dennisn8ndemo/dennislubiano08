@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
-import profileImage from "@/assets/profile-placeholder.png";
+import profileImage from "@/assets/profile-picture.png";
 import heroBg from "@/assets/hero-bg.jpg";
 
 export const HeroSection = () => {
