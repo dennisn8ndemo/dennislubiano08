@@ -10,7 +10,7 @@
 @layer base {
   :root {
     /* Light theme - Vibrant & Accessible */
-    --background: 200 30% 98%;
+    --background: 200 25% 92%;
     --foreground: 210 40% 15%;
 
     --card: 0 0% 100%;
