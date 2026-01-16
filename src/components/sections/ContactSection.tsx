@@ -1,9 +1,6 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Mail, MapPin, Calendar, Send, Linkedin, Youtube, Facebook } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Mail, MapPin, Calendar, Linkedin, Youtube, Facebook } from "lucide-react";
+import telegramQr from "@/assets/telegram-qr.jpg";
+import whatsappQr from "@/assets/whatsapp-qr.jpg";
 
 // Custom TikTok icon since lucide doesn't have one
 const TikTokIcon = ({ className }: { className?: string }) => (
@@ -46,32 +43,12 @@ const socials = [
   { icon: Linkedin, href: "https://www.linkedin.com/in/dennis-lubiano-7b978416b/", label: "LinkedIn" },
 ];
 
+const qrCodes = [
+  { image: telegramQr, label: "Telegram", description: "Scan to message on Telegram" },
+  { image: whatsappQr, label: "WhatsApp", description: "Scan to message on WhatsApp" },
+];
+
 export const ContactSection = () => {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Message Sent!",
-      description: "Thanks for reaching out. I'll get back to you within 24 hours.",
-    });
-    
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setIsSubmitting(false);
-  };
-
   return (
     <section id="contact" className="py-20">
       <div className="container mx-auto px-4">
@@ -89,8 +66,8 @@ export const ContactSection = () => {
           {/* Contact Info */}
           <div className="space-y-8">
             <div className="space-y-6">
-              {contactInfo.map((item) => (
-                <div key={item.label} className="flex items-center gap-4">
+              {contactInfo.map((item, index) => (
+                <div key={`${item.label}-${index}`} className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-accent flex items-center justify-center flex-shrink-0">
                     <item.icon className="w-5 h-5 text-primary-foreground" />
                   </div>
@@ -124,7 +101,10 @@ export const ContactSection = () => {
                 ))}
               </div>
             </div>
+          </div>
 
+          {/* Intro Video & QR Codes */}
+          <div className="space-y-8">
             {/* Intro Video */}
             <div className="bg-card rounded-2xl overflow-hidden shadow-card border border-border">
               <video
@@ -134,77 +114,31 @@ export const ContactSection = () => {
                 poster=""
               />
               <div className="p-4">
-                <p className="font-semibold">Watch My Introduction</p>
-                <p className="text-sm text-muted-foreground">Learn more about my background and expertise</p>
+                <p className="font-semibold text-lg">Watch My Introduction</p>
+                <p className="text-sm text-muted-foreground">Learn more about my background and expertise in AI automation</p>
               </div>
+            </div>
+
+            {/* QR Codes */}
+            <div className="grid sm:grid-cols-2 gap-6">
+              {qrCodes.map((qr) => (
+                <div 
+                  key={qr.label} 
+                  className="bg-card rounded-2xl p-6 shadow-card border border-border hover:shadow-glow transition-all duration-300 text-center"
+                >
+                  <div className="bg-white rounded-xl p-4 mb-4 inline-block">
+                    <img 
+                      src={qr.image} 
+                      alt={`${qr.label} QR Code`} 
+                      className="w-36 h-36 object-contain mx-auto"
+                    />
+                  </div>
+                  <p className="font-semibold text-lg">{qr.label}</p>
+                  <p className="text-sm text-muted-foreground">{qr.description}</p>
+                </div>
+              ))}
             </div>
           </div>
-
-          {/* Contact Form */}
-          <form onSubmit={handleSubmit} className="space-y-6 bg-card p-8 rounded-2xl shadow-card border border-border">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium">
-                  Your Name
-                </label>
-                <Input
-                  id="name"
-                  placeholder="John Doe"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium">
-                  Email Address
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="john@example.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="subject" className="text-sm font-medium">
-                Subject
-              </label>
-              <Input
-                id="subject"
-                placeholder="Project Inquiry"
-                value={formData.subject}
-                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="message" className="text-sm font-medium">
-                Message
-              </label>
-              <Textarea
-                id="message"
-                placeholder="Tell me about your project and how I can help..."
-                rows={5}
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                required
-              />
-            </div>
-            <Button type="submit" variant="hero" size="xl" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? (
-                "Sending..."
-              ) : (
-                <>
-                  Send Message
-                  <Send className="ml-2" />
-                </>
-              )}
-            </Button>
-          </form>
         </div>
       </div>
     </section>
