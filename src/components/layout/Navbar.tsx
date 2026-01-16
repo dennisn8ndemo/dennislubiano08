@@ -48,8 +48,9 @@ export const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <div className="flex flex-col items-end gap-1">
-            <span className="text-xs text-muted-foreground">$15/hr • Projects & One-Time Gigs</span>
+          <div className="flex flex-col items-end gap-2">
+            <span className="text-lg font-semibold text-primary">$15/hr • Projects & One-Time Gigs</span>
+            <span className="text-sm text-muted-foreground">Open for Projects, Part-time & Full-time</span>
             <Button variant="hero" size="lg" asChild>
               <a href="#contact">Let's Connect</a>
             </Button>
@@ -80,8 +81,9 @@ export const Navbar = () => {
                 {link.label}
               </a>
             ))}
-            <div className="flex flex-col items-center gap-1">
-              <span className="text-xs text-muted-foreground">$15/hr • Projects & One-Time Gigs</span>
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-lg font-semibold text-primary">$15/hr • Projects & One-Time Gigs</span>
+              <span className="text-sm text-muted-foreground">Open for Projects, Part-time & Full-time</span>
               <Button variant="hero" size="lg" asChild>
                 <a href="#contact">Let's Connect</a>
               </Button>
