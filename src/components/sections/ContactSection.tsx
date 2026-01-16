@@ -20,6 +20,12 @@ const contactInfo = [
     href: "mailto:dennislubiano08@yahoo.com",
   },
   {
+    icon: Mail,
+    label: "Email",
+    value: "cloudfonenew1990@gmail.com",
+    href: "mailto:cloudfonenew1990@gmail.com",
+  },
+  {
     icon: MapPin,
     label: "Location",
     value: "Philippines (Remote)",
