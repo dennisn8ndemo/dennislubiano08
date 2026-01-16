@@ -33,7 +33,7 @@ export const Navbar = () => {
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <a href="#home" className="text-3xl font-bold text-gradient">
+        <a href="#home" className="text-4xl md:text-5xl font-bold text-gradient">
           Dennis Lubiano
         </a>
 
@@ -48,9 +48,12 @@ export const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <Button variant="hero" size="lg" asChild>
-            <a href="#contact">Get in Touch</a>
-          </Button>
+          <div className="flex flex-col items-end gap-1">
+            <span className="text-xs text-muted-foreground">$15/hr • Projects & One-Time Gigs</span>
+            <Button variant="hero" size="lg" asChild>
+              <a href="#contact">Let's Connect</a>
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
@@ -77,9 +80,12 @@ export const Navbar = () => {
                 {link.label}
               </a>
             ))}
-            <Button variant="hero" size="lg" asChild>
-              <a href="#contact">Get in Touch</a>
-            </Button>
+            <div className="flex flex-col items-center gap-1">
+              <span className="text-xs text-muted-foreground">$15/hr • Projects & One-Time Gigs</span>
+              <Button variant="hero" size="lg" asChild>
+                <a href="#contact">Let's Connect</a>
+              </Button>
+            </div>
           </div>
         </div>
       )}
