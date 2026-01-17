@@ -17,12 +17,12 @@ const projects = [
   },
   {
     id: 2,
-    title: "Google Drive to Facebook Publisher",
-    description: "Download images from Google Drive and automatically post to Facebook pages with scheduling.",
+    title: "Calendly Appointments to Airtable",
+    description: "Automated workflow syncing Calendly appointments directly to Airtable for seamless scheduling management.",
     platform: "n8n" as Platform,
-    videoUrl: "/videos/n8n-gdrive-facebook.mp4",
-    tools: ["n8n", "Google Drive API", "Facebook Graph API"],
-    impact: "Streamlined social media management for multiple clients",
+    videoUrl: "/videos/calendly-airtable.mp4",
+    tools: ["n8n", "Calendly API", "Airtable API"],
+    impact: "Eliminated manual data entry for appointment tracking",
   },
   {
     id: 3,
