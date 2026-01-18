@@ -10,14 +10,15 @@ const BookingSection = () => {
             Schedule a free consultation to discuss your automation needs
           </p>
         </div>
-        <div className="max-w-4xl mx-auto">
+        <div className="w-full max-w-6xl mx-auto">
           <iframe
-            src="https://calendly.com/cloudfonenew1990/dennis-lubiano-automation-specialist"
+            src="https://calendly.com/cloudfonenew1990/dennis-lubiano-automation-specialist?hide_gdpr_banner=1"
             width="100%"
             height="700"
             frameBorder="0"
+            scrolling="no"
             title="Schedule a consultation with Dennis Lubiano"
-            className="rounded-lg"
+            className="rounded-lg overflow-hidden"
           />
         </div>
       </div>
