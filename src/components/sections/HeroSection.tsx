@@ -40,7 +40,7 @@ export const HeroSection = () => {
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <Button variant="hero" size="xl" asChild>
-                <a href="#contact">
+                <a href="#booking">
                   Schedule a Consultation
                   <ArrowRight className="ml-2" />
                 </a>
