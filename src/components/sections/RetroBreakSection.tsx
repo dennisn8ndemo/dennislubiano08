@@ -5,18 +5,43 @@ const GAME_WIDTH = 320;
 const GAME_HEIGHT = 568;
 const BIRD_SIZE = 32;
 const PIPE_WIDTH = 52;
-const PIPE_GAP = 140;
-const GRAVITY = 0.5;
-const JUMP_STRENGTH = -8;
-const PIPE_SPEED = 3;
+const BASE_PIPE_GAP = 200; // Starting gap (easy)
+const MIN_PIPE_GAP = 100; // Hardest gap
+const BASE_GRAVITY = 0.35; // Starting gravity (easy)
+const MAX_GRAVITY = 0.65; // Hardest gravity
+const BASE_JUMP_STRENGTH = -7; // Starting jump (easy)
+const MIN_JUMP_STRENGTH = -9; // Hardest jump (more powerful needed)
+const BASE_PIPE_SPEED = 2; // Starting speed (easy)
+const MAX_PIPE_SPEED = 5; // Hardest speed
 
 interface Pipe {
   x: number;
   topHeight: number;
+  gap: number; // Store gap for each pipe since difficulty changes
   passed: boolean;
 }
 
 type GameState = "start" | "playing" | "gameover";
+
+// Calculate difficulty based on pipes passed (1-10 scale, then random after 100)
+const getDifficulty = (pipesPassed: number): number => {
+  if (pipesPassed >= 100) {
+    // Random difficulty between 1 and 10 after 100 pipes
+    return Math.floor(Math.random() * 10) + 1;
+  }
+  // Increase difficulty every 10 pipes (1/10 at start, 10/10 at 90+ pipes)
+  return Math.min(Math.floor(pipesPassed / 10) + 1, 10);
+};
+
+const getDifficultyParams = (difficulty: number) => {
+  const t = (difficulty - 1) / 9; // 0 to 1 scale
+  return {
+    pipeGap: BASE_PIPE_GAP - t * (BASE_PIPE_GAP - MIN_PIPE_GAP),
+    gravity: BASE_GRAVITY + t * (MAX_GRAVITY - BASE_GRAVITY),
+    jumpStrength: BASE_JUMP_STRENGTH - t * (MIN_JUMP_STRENGTH - BASE_JUMP_STRENGTH),
+    pipeSpeed: BASE_PIPE_SPEED + t * (MAX_PIPE_SPEED - BASE_PIPE_SPEED),
+  };
+};
 
 export const RetroBreakSection = () => {
   const [gameState, setGameState] = useState<GameState>("start");
@@ -24,6 +49,7 @@ export const RetroBreakSection = () => {
   const [birdVelocity, setBirdVelocity] = useState(0);
   const [pipes, setPipes] = useState<Pipe[]>([]);
   const [score, setScore] = useState(0);
+  const [difficulty, setDifficulty] = useState(1);
   const [highScore, setHighScore] = useState(() => {
     const saved = localStorage.getItem("flappyHighScore");
     return saved ? parseInt(saved, 10) : 0;
@@ -31,13 +57,16 @@ export const RetroBreakSection = () => {
   
   const gameLoopRef = useRef<number>();
   const lastPipeRef = useRef<number>(0);
+  const totalPipesPassedRef = useRef<number>(0);
 
   const resetGame = useCallback(() => {
     setBirdY(GAME_HEIGHT / 2);
     setBirdVelocity(0);
     setPipes([]);
     setScore(0);
+    setDifficulty(1);
     lastPipeRef.current = 0;
+    totalPipesPassedRef.current = 0;
   }, []);
 
   const startGame = useCallback(() => {
@@ -47,13 +76,14 @@ export const RetroBreakSection = () => {
 
   const jump = useCallback(() => {
     if (gameState === "playing") {
-      setBirdVelocity(JUMP_STRENGTH);
+      const params = getDifficultyParams(difficulty);
+      setBirdVelocity(params.jumpStrength);
     } else if (gameState === "start") {
       startGame();
     } else if (gameState === "gameover") {
       startGame();
     }
-  }, [gameState, startGame]);
+  }, [gameState, startGame, difficulty]);
 
   // Handle keyboard and click events
   useEffect(() => {
@@ -72,6 +102,8 @@ export const RetroBreakSection = () => {
   useEffect(() => {
     if (gameState !== "playing") return;
 
+    const params = getDifficultyParams(difficulty);
+
     const gameLoop = () => {
       setBirdY((prev) => {
         const newY = prev + birdVelocity;
@@ -89,24 +121,26 @@ export const RetroBreakSection = () => {
         return newY;
       });
 
-      setBirdVelocity((prev) => prev + GRAVITY);
+      setBirdVelocity((prev) => prev + params.gravity);
 
       // Update pipes
       setPipes((prevPipes) => {
         let newPipes = prevPipes
           .map((pipe) => ({
             ...pipe,
-            x: pipe.x - PIPE_SPEED,
+            x: pipe.x - params.pipeSpeed,
           }))
           .filter((pipe) => pipe.x > -PIPE_WIDTH);
 
         // Add new pipe
         const lastPipe = newPipes[newPipes.length - 1];
         if (!lastPipe || lastPipe.x < GAME_WIDTH - 200) {
-          const topHeight = Math.random() * (GAME_HEIGHT - PIPE_GAP - 100) + 50;
+          const currentGap = params.pipeGap;
+          const topHeight = Math.random() * (GAME_HEIGHT - currentGap - 100) + 50;
           newPipes.push({
             x: GAME_WIDTH,
             topHeight,
+            gap: currentGap,
             passed: false,
           });
         }
@@ -123,7 +157,7 @@ export const RetroBreakSection = () => {
         cancelAnimationFrame(gameLoopRef.current);
       }
     };
-  }, [gameState, birdVelocity, score, highScore]);
+  }, [gameState, birdVelocity, score, highScore, difficulty]);
 
   // Collision detection and scoring
   useEffect(() => {
@@ -149,7 +183,7 @@ export const RetroBreakSection = () => {
           }
         }
         // Check collision with bottom pipe
-        if (birdBottom > pipe.topHeight + PIPE_GAP) {
+        if (birdBottom > pipe.topHeight + pipe.gap) {
           setGameState("gameover");
           if (score > highScore) {
             setHighScore(score);
@@ -166,6 +200,10 @@ export const RetroBreakSection = () => {
           )
         );
         setScore((prev) => prev + 1);
+        totalPipesPassedRef.current += 1;
+        // Update difficulty based on pipes passed
+        const newDifficulty = getDifficulty(totalPipesPassedRef.current);
+        setDifficulty(newDifficulty);
       }
     });
   }, [pipes, birdY, gameState, score, highScore]);
@@ -264,9 +302,9 @@ export const RetroBreakSection = () => {
                     className="absolute"
                     style={{
                       left: pipe.x,
-                      top: pipe.topHeight + PIPE_GAP,
+                      top: pipe.topHeight + pipe.gap,
                       width: PIPE_WIDTH,
-                      height: GAME_HEIGHT - pipe.topHeight - PIPE_GAP,
+                      height: GAME_HEIGHT - pipe.topHeight - pipe.gap,
                       background: "linear-gradient(90deg, #1a5a1a 0%, #2d8a2d 40%, #1a5a1a 100%)",
                       borderTop: "4px solid #0f3f0f",
                       boxShadow: "inset 0 0 10px rgba(0,0,0,0.5)",
@@ -362,15 +400,27 @@ export const RetroBreakSection = () => {
 
               {/* Score display */}
               {gameState === "playing" && (
-                <div
-                  className="absolute top-4 left-1/2 -translate-x-1/2 text-4xl font-bold"
-                  style={{
-                    color: "#fff",
-                    textShadow: "2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000",
-                    fontFamily: "monospace",
-                  }}
-                >
-                  {score}
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 text-center">
+                  <div
+                    className="text-4xl font-bold"
+                    style={{
+                      color: "#fff",
+                      textShadow: "2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000",
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    {score}
+                  </div>
+                  <div
+                    className="text-xs mt-1 font-bold"
+                    style={{
+                      color: score >= 100 ? "#ff00ff" : `hsl(${120 - (difficulty - 1) * 12}, 100%, 50%)`,
+                      textShadow: "1px 1px 0 #000",
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    {score >= 100 ? "LVL: RNG!" : `LVL: ${difficulty}/10`}
+                  </div>
                 </div>
               )}
 
