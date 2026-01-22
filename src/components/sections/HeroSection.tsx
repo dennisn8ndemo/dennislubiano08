@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import profileImage from "@/assets/profile-picture.png";
 import heroBg from "@/assets/hero-bg.jpg";
+import { OrbitingIcons } from "@/components/ui/OrbitingIcons";
 
 export const HeroSection = () => {
   return (
@@ -54,15 +55,14 @@ export const HeroSection = () => {
             </div>
           </div>
 
-          {/* Profile Image */}
+          {/* Profile Image with Orbiting AI Icons */}
           <div className="flex justify-center lg:justify-end animate-fade-in">
             <div className="relative">
-              {/* Decorative rings */}
-              <div className="absolute inset-0 -m-4 border-2 border-primary/20 rounded-full animate-pulse-soft" />
-              <div className="absolute inset-0 -m-8 border border-accent/10 rounded-full animate-pulse-soft" style={{ animationDelay: "0.5s" }} />
+              {/* Orbiting AI Tool Icons */}
+              <OrbitingIcons size={280} />
               
               {/* Image container */}
-              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-glow border-4 border-background animate-float">
+              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-glow border-4 border-background animate-float z-10">
                 <img
                   src={profileImage}
                   alt="Dennis Lubiano - Automation Specialist"
@@ -71,10 +71,10 @@ export const HeroSection = () => {
               </div>
               
               {/* Floating badges */}
-              <div className="absolute -bottom-2 -left-4 bg-card px-4 py-2 rounded-full shadow-card border border-border">
+              <div className="absolute -bottom-2 -left-4 bg-card px-4 py-2 rounded-full shadow-card border border-border z-20">
                 <span className="text-sm font-semibold text-primary">n8n Expert</span>
               </div>
-              <div className="absolute -top-2 -right-4 bg-card px-4 py-2 rounded-full shadow-card border border-border">
+              <div className="absolute -top-2 -right-4 bg-card px-4 py-2 rounded-full shadow-card border border-border z-20">
                 <span className="text-sm font-semibold text-secondary">KYC Background</span>
               </div>
             </div>
