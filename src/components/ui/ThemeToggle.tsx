@@ -20,18 +20,23 @@ export const ThemeToggle = () => {
   }
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="w-10 h-10 rounded-full bg-card/50 backdrop-blur-sm border border-border hover:bg-card transition-all duration-300"
-      aria-label="Toggle theme"
-    >
-      {theme === "dark" ? (
-        <Sun className="h-5 w-5 text-secondary transition-transform duration-300 rotate-0" />
-      ) : (
-        <Moon className="h-5 w-5 text-primary transition-transform duration-300 rotate-0" />
-      )}
-    </Button>
+    <div className="flex flex-col items-center gap-1">
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        className="w-10 h-10 rounded-full bg-card/50 backdrop-blur-sm border border-border hover:bg-card transition-all duration-300"
+        aria-label="Toggle theme"
+      >
+        {theme === "dark" ? (
+          <Sun className="h-5 w-5 text-secondary transition-transform duration-300 rotate-0" />
+        ) : (
+          <Moon className="h-5 w-5 text-primary transition-transform duration-300 rotate-0" />
+        )}
+      </Button>
+      <span className="text-[10px] text-muted-foreground font-medium">
+        {theme === "dark" ? "Dark Mode" : "Light Mode"}
+      </span>
+    </div>
   );
 };
