@@ -37,14 +37,33 @@ interface BackgroundTheme {
 const SEASONS: Season[] = ["winter", "spring", "summer", "fall"];
 const PLACES: Place[] = ["countryside", "city", "highway", "woods"];
 
-// Retro 8-bit sound generator using Web Audio API
-const createAudioContext = () => {
-  return new (window.AudioContext || (window as any).webkitAudioContext)();
+// Singleton AudioContext manager to prevent audio breaking
+let audioContext: AudioContext | null = null;
+let audioContextResumed = false;
+
+const getAudioContext = (): AudioContext | null => {
+  try {
+    if (!audioContext) {
+      audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+    // Resume context if suspended (browser autoplay policy)
+    if (audioContext.state === "suspended" && !audioContextResumed) {
+      audioContext.resume().then(() => {
+        audioContextResumed = true;
+      }).catch(() => {});
+    }
+    return audioContext;
+  } catch (e) {
+    return null;
+  }
 };
 
+// Retro 8-bit sound generator using Web Audio API with singleton context
 const playRetroSound = (type: "jump" | "score" | "gameover" | "start") => {
   try {
-    const ctx = createAudioContext();
+    const ctx = getAudioContext();
+    if (!ctx || ctx.state === "closed") return;
+    
     const oscillator = ctx.createOscillator();
     const gainNode = ctx.createGain();
     
@@ -52,6 +71,18 @@ const playRetroSound = (type: "jump" | "score" | "gameover" | "start") => {
     gainNode.connect(ctx.destination);
     
     const now = ctx.currentTime;
+    
+    // Cleanup function to properly disconnect nodes
+    const cleanup = () => {
+      try {
+        oscillator.disconnect();
+        gainNode.disconnect();
+      } catch (e) {
+        // Ignore cleanup errors
+      }
+    };
+    
+    oscillator.onended = cleanup;
     
     switch (type) {
       case "jump":
@@ -62,7 +93,7 @@ const playRetroSound = (type: "jump" | "score" | "gameover" | "start") => {
         gainNode.gain.setValueAtTime(0.15, now);
         gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
         oscillator.start(now);
-        oscillator.stop(now + 0.1);
+        oscillator.stop(now + 0.15);
         break;
         
       case "score":
@@ -74,7 +105,7 @@ const playRetroSound = (type: "jump" | "score" | "gameover" | "start") => {
         gainNode.gain.setValueAtTime(0.12, now + 0.08);
         gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
         oscillator.start(now);
-        oscillator.stop(now + 0.2);
+        oscillator.stop(now + 0.25);
         break;
         
       case "gameover":
@@ -85,7 +116,7 @@ const playRetroSound = (type: "jump" | "score" | "gameover" | "start") => {
         gainNode.gain.setValueAtTime(0.15, now);
         gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
         oscillator.start(now);
-        oscillator.stop(now + 0.5);
+        oscillator.stop(now + 0.55);
         break;
         
       case "start":
@@ -99,7 +130,7 @@ const playRetroSound = (type: "jump" | "score" | "gameover" | "start") => {
         gainNode.gain.setValueAtTime(0.12, now + 0.3);
         gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
         oscillator.start(now);
-        oscillator.stop(now + 0.5);
+        oscillator.stop(now + 0.55);
         break;
     }
   } catch (e) {
