@@ -547,12 +547,9 @@ export const RetroBreakSection = () => {
       const params = getDifficultyParams(difficulty);
       setBirdVelocity(params.jumpStrength);
       playRetroSound("jump");
-    } else if (gameState === "start") {
-      startGame();
-    } else if (gameState === "gameover") {
-      startGame();
     }
-  }, [gameState, startGame, difficulty]);
+    // Only allow starting via the button, not by clicking/space
+  }, [gameState, difficulty]);
 
   // Play score sound when score increases
   useEffect(() => {
@@ -573,10 +570,10 @@ export const RetroBreakSection = () => {
     }
   }, [gameState]);
 
-  // Handle keyboard and click events
+  // Handle keyboard events (only during gameplay)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === "Space") {
+      if (e.code === "Space" && gameState === "playing") {
         e.preventDefault();
         jump();
       }
@@ -584,7 +581,7 @@ export const RetroBreakSection = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [jump]);
+  }, [jump, gameState]);
 
   // Game loop
   useEffect(() => {
@@ -696,21 +693,22 @@ export const RetroBreakSection = () => {
             Need a <span className="text-gradient">1-minute break?</span>
           </h2>
           <p className="text-muted-foreground">
-            Click or press Space to play!
+            Click the button to start playing!
           </p>
         </div>
 
         <div className="flex justify-center">
           <div
-            className="relative rounded-2xl overflow-hidden cursor-pointer select-none"
+            className="relative rounded-2xl overflow-hidden select-none"
             style={{
               width: GAME_WIDTH,
               maxWidth: "100%",
               aspectRatio: "9/16",
               boxShadow: "0 0 40px hsl(var(--primary) / 0.4), 0 0 80px hsl(var(--accent) / 0.2)",
               border: "3px solid hsl(var(--primary) / 0.6)",
+              cursor: gameState === "playing" ? "pointer" : "default",
             }}
-            onClick={jump}
+            onClick={gameState === "playing" ? jump : undefined}
           >
             {/* Dynamic Background */}
             <div
@@ -899,7 +897,7 @@ export const RetroBreakSection = () => {
                     RETRO BREAK
                   </div>
                   <div className="text-muted-foreground mb-6 text-center px-4">
-                    <p className="mb-2">🎮 Press SPACE or Click to fly</p>
+                    <p className="mb-2">🎮 Press SPACE or Click to fly during game</p>
                     <p>Avoid the pipes!</p>
                     <p className="text-xs mt-2 opacity-70">🔊 Sound enabled</p>
                   </div>
