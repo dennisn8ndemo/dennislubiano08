@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sparkles, Download, Loader2, Wand2, Facebook, CheckCircle } from "lucide-react";
 
-const POLLINATIONS_API_KEY = "sk_yjyXvLm9d0PNF1XwLAKB2Q0vjfebuCXl";
+const POLLINATIONS_API_KEY = "sk_g6F0UOKrtccpNiHDoxkWzv69sqxCQrbu";
 
 export const ImageGeneratorSection = () => {
   const [prompt, setPrompt] = useState("");
