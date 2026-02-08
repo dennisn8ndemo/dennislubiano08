@@ -2,34 +2,19 @@ import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Sarah J.",
-    role: "Small Business",
-    content: "Dennis used his KYC expertise to slash my onboarding time by 30% while catching every red flag.",
+    name: "Andrew K.",
+    role: "Onlinejobs.ph Client",
+    content: "I am a beginner with n8n, and Dennis helped me automate my Facebook page and generate the necessary Access Tokens. He made a complex process very easy to understand.",
   },
   {
-    name: "Mike R.",
-    role: "Forex Trader",
-    content: "He solved my VPS and MetaTrader issues in minutes and automated my entire alert system.",
+    name: "Robert J.",
+    role: "Onlinejobs.ph Client",
+    content: "Dennis helped me set up a simple form that captures all of my potential leads. Now, I have a reliable system where all my client data is automatically saved into our CRM and a Google Sheet for back up.",
   },
   {
-    name: "Amanda B.",
-    role: "Shop Owner",
-    content: "Dennis turned my manual data entry nightmare into a fully automated lead machine with Make.com.",
-  },
-  {
-    name: "Dave M.",
-    role: "Realtor",
-    content: "The CRM automation Dennis built actually sounds human and has completely transformed my follow-ups.",
-  },
-  {
-    name: "Jess F.",
-    role: "Consultant",
-    content: "Dennis is a rare find who perfectly bridges the gap between identity verification and tech automation.",
-  },
-  {
-    name: "Rob E.",
-    role: "Marketer",
-    content: "He streamlined my TikTok leads into my CRM with zero friction—fast, technical, and highly effective.",
+    name: "Kyle K.",
+    role: "Facebook Client",
+    content: "I saw his short reels on Facebook and asked if he could teach me his process. He was generous enough to do a 1-on-1 online session with me. While you can learn workflows online, having someone guide you through n8n personally makes all the difference.",
   },
 ];
 
