@@ -4,15 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sparkles, Download, Loader2, Wand2, Facebook, CheckCircle } from "lucide-react";
 
-declare global {
-  interface Window {
-    puter: {
-      ai: {
-        txt2img: (prompt: string) => Promise<HTMLImageElement>;
-      };
-    };
-  }
-}
+const POLLINATIONS_API_KEY = "sk_5tddB2hETTMrnUevu4A6oFTHV4MxfOtT";
 
 export const ImageGeneratorSection = () => {
   const [prompt, setPrompt] = useState("");
@@ -37,8 +29,18 @@ export const ImageGeneratorSection = () => {
     setShowThankYou(false);
 
     try {
-      const image = await window.puter.ai.txt2img(prompt);
-      setGeneratedImageUrl(image.src);
+      const encodedPrompt = encodeURIComponent(prompt);
+      const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&model=flux&nologo=true&enhance=true&token=${POLLINATIONS_API_KEY}`;
+      
+      // Preload the image to ensure it's generated before displaying
+      await new Promise<void>((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve();
+        img.onerror = () => reject(new Error("Failed to generate image"));
+        img.src = imageUrl;
+      });
+
+      setGeneratedImageUrl(imageUrl);
       setShowLeadCapture(true);
     } catch (err) {
       console.error("Error generating image:", err);
@@ -182,7 +184,7 @@ export const ImageGeneratorSection = () => {
                       </div>
                       <h3 className="text-xl font-bold">Thank you for visiting my site, {clientName}! 🎉</h3>
                       <p className="text-muted-foreground">
-                        Here is your image powered by <span className="font-semibold text-primary">dennisn8ndemo</span> and <span className="font-semibold text-primary">Puter.ai</span>
+                        Here is your image powered by <span className="font-semibold text-primary">dennisn8ndemo</span> and <span className="font-semibold text-primary">Pollinations.ai</span>
                       </p>
                       <div className="pt-4 border-t border-border/50">
                         <p className="text-sm text-muted-foreground mb-3">Follow me for more AI content and see my scheduled workflow working everyday!</p>
@@ -209,8 +211,8 @@ export const ImageGeneratorSection = () => {
           <div className="text-center mt-6">
             <p className="text-sm text-muted-foreground">
               Powered by{" "}
-              <a href="https://puter.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
-                Puter.ai
+              <a href="https://pollinations.ai" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline">
+                Pollinations.ai
               </a>
             </p>
           </div>
