@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { Play, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { Play, ThumbsUp, Heart, Smile } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Platform = "all" | "n8n" | "make" | "other";
+
+type ReactionType = "like" | "heart" | "wow";
 
 const projects = [
   {
@@ -35,12 +36,12 @@ const projects = [
   },
   {
     id: 4,
-    title: "Telegram & Discord Bot",
-    description: "Custom bot development for cross-platform communication and automation.",
-    platform: "other" as Platform,
-    videoUrl: "/videos/telegram-discord-bot.mp4",
-    tools: ["Bot Development", "Telegram API", "Discord API"],
-    impact: "24/7 automated customer engagement and notifications",
+    title: "Google Ads Daily Report",
+    description: "Automated daily reporting workflow that pulls Google Ads performance data and generates comprehensive reports.",
+    platform: "n8n" as Platform,
+    videoUrl: "/videos/n8n-google-ads-report.mp4",
+    tools: ["n8n", "Google Ads API", "Automated Reporting"],
+    impact: "Automated daily ad performance tracking saving hours of manual work",
   },
 ];
 
@@ -51,9 +52,55 @@ const filters: { label: string; value: Platform }[] = [
   { label: "Other", value: "other" },
 ];
 
+const reactionConfig: { type: ReactionType; icon: typeof ThumbsUp; label: string }[] = [
+  { type: "like", icon: ThumbsUp, label: "Like" },
+  { type: "heart", icon: Heart, label: "Heart" },
+  { type: "wow", icon: Smile, label: "Wow" },
+];
+
+type Reactions = Record<number, Record<ReactionType, number>>;
+
+const getStoredReactions = (): Reactions => {
+  try {
+    const stored = localStorage.getItem("portfolio_reactions");
+    if (stored) return JSON.parse(stored);
+  } catch {}
+  // Default seed counts to look active
+  return {
+    1: { like: 24, heart: 18, wow: 9 },
+    2: { like: 31, heart: 22, wow: 14 },
+    3: { like: 19, heart: 15, wow: 7 },
+    4: { like: 12, heart: 8, wow: 5 },
+  };
+};
+
+const saveReactions = (reactions: Reactions) => {
+  try {
+    localStorage.setItem("portfolio_reactions", JSON.stringify(reactions));
+  } catch {}
+};
+
 export const PortfolioSection = () => {
   const [activeFilter, setActiveFilter] = useState<Platform>("all");
   const [playingVideo, setPlayingVideo] = useState<number | null>(null);
+  const [reactions, setReactions] = useState<Reactions>(getStoredReactions);
+  const [animating, setAnimating] = useState<string | null>(null);
+
+  useEffect(() => {
+    saveReactions(reactions);
+  }, [reactions]);
+
+  const handleReaction = (projectId: number, type: ReactionType) => {
+    setReactions((prev) => ({
+      ...prev,
+      [projectId]: {
+        ...prev[projectId],
+        [type]: (prev[projectId]?.[type] || 0) + 1,
+      },
+    }));
+    setAnimating(`${projectId}-${type}`);
+    setTimeout(() => setAnimating(null), 400);
+  };
 
   const filteredProjects = projects.filter(
     (project) => activeFilter === "all" || project.platform === activeFilter
@@ -145,10 +192,50 @@ export const PortfolioSection = () => {
                 </div>
 
                 <div className="pt-4 border-t border-border">
-                  <p className="text-sm">
+                  <p className="text-sm mb-4">
                     <span className="font-semibold text-primary">Impact:</span>{" "}
                     <span className="text-muted-foreground">{project.impact}</span>
                   </p>
+
+                  {/* Reactions */}
+                  <div className="flex items-center gap-3">
+                    {reactionConfig.map(({ type, icon: Icon, label }) => {
+                      const count = reactions[project.id]?.[type] || 0;
+                      const isAnimating = animating === `${project.id}-${type}`;
+                      return (
+                        <button
+                          key={type}
+                          onClick={() => handleReaction(project.id, type)}
+                          className={cn(
+                            "relative flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-muted/50 hover:bg-muted transition-all duration-200 hover:scale-105 active:scale-95",
+                            isAnimating && "scale-110"
+                          )}
+                          title={label}
+                        >
+                          <Icon
+                            className={cn(
+                              "w-4 h-4 transition-all duration-200",
+                              type === "like" && "text-primary",
+                              type === "heart" && "text-destructive",
+                              type === "wow" && "text-secondary",
+                              isAnimating && "scale-125"
+                            )}
+                            fill={type === "heart" ? "currentColor" : "none"}
+                          />
+                          {/* Counter badge */}
+                          <span
+                            className={cn(
+                              "absolute -top-2 -right-1 min-w-[20px] h-5 flex items-center justify-center px-1 rounded-full text-[10px] font-bold bg-primary text-primary-foreground shadow-sm transition-transform duration-200",
+                              isAnimating && "scale-125"
+                            )}
+                          >
+                            {count}
+                          </span>
+                          <span className="text-xs text-muted-foreground font-medium sr-only">{label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
