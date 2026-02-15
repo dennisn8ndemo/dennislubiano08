@@ -108,7 +108,7 @@ export const ContactSection = () => {
             {/* Intro Video */}
             <div className="bg-card rounded-2xl overflow-hidden shadow-card border border-border">
               <video
-                src="/videos/intro-video.mp4"
+                src="/videos/intro-video.webm"
                 controls
                 className="w-full aspect-video"
                 poster=""
