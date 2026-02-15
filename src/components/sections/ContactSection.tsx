@@ -107,11 +107,10 @@ export const ContactSection = () => {
           <div className="space-y-8">
             {/* Intro Video */}
             <div className="bg-card rounded-2xl overflow-hidden shadow-card border border-border">
-              <video
-                src="/videos/intro-video.mp4"
+            <video
+                src="/videos/intro-video.webm"
                 controls
                 className="w-full aspect-video"
-                poster=""
               />
               <div className="p-4">
                 <p className="font-semibold text-lg">Watch My Introduction</p>
