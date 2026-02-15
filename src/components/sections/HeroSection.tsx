@@ -79,14 +79,14 @@ export const HeroSection = () => {
               </div>
               
               {/* Resume Download */}
-              <div className="flex justify-center mt-10 z-20 relative">
+              <div className="flex justify-center mt-4 z-20 relative">
                 <a
                   href="/Dennis_Lubiano_Resume.pdf"
                   download="Dennis_Lubiano_Resume.pdf"
-                  className="inline-flex items-center gap-3 bg-card px-7 py-3.5 rounded-full shadow-card border-2 border-border hover:border-primary hover:shadow-glow transition-all duration-300"
+                  className="inline-flex items-center gap-2 bg-card px-5 py-2.5 rounded-full shadow-card border border-border hover:border-primary hover:shadow-glow transition-all duration-300"
                 >
-                  <FileDown className="w-5 h-5 text-primary" />
-                  <span className="text-base font-semibold text-foreground">Download Resume</span>
+                  <FileDown className="w-4 h-4 text-primary" />
+                  <span className="text-sm font-semibold text-foreground">Download Resume</span>
                 </a>
               </div>
             </div>
