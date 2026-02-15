@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, FileDown } from "lucide-react";
+import { ArrowRight, Play } from "lucide-react";
 import profileImage from "@/assets/profile-picture.png";
 import heroBg from "@/assets/hero-bg.jpg";
 import { OrbitingIcons } from "@/components/ui/OrbitingIcons";
@@ -56,13 +56,13 @@ export const HeroSection = () => {
           </div>
 
           {/* Profile Image with Orbiting AI Icons */}
-          <div className="flex flex-col items-center lg:items-end animate-fade-in">
-            <div className="relative flex items-center justify-center" style={{ width: 420, height: 420 }}>
+          <div className="flex justify-center lg:justify-end animate-fade-in">
+            <div className="relative">
               {/* Orbiting AI Tool Icons */}
               <OrbitingIcons size={280} />
               
-              {/* Image container - centered inside the rings */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-72 md:h-72 rounded-full overflow-hidden shadow-glow border-4 border-background animate-float z-10">
+              {/* Image container */}
+              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-glow border-4 border-background animate-float z-10">
                 <img
                   src={profileImage}
                   alt="Dennis Lubiano - Automation Specialist"
@@ -77,18 +77,6 @@ export const HeroSection = () => {
               <div className="absolute -top-2 -right-4 bg-card px-4 py-2 rounded-full shadow-card border border-border z-20">
                 <span className="text-sm font-semibold text-secondary">KYC Background</span>
               </div>
-            </div>
-            
-            {/* Resume Download - below the rings */}
-            <div className="mt-6 z-20">
-              <a
-                href="/Dennis_Lubiano_Resume.pdf"
-                download="Dennis_Lubiano_Resume.pdf"
-                className="inline-flex items-center gap-3 bg-card px-8 py-4 rounded-full shadow-card border border-border hover:border-primary hover:shadow-glow transition-all duration-300"
-              >
-                <FileDown className="w-6 h-6 text-primary" />
-                <span className="text-base font-semibold text-foreground">Download Resume</span>
-              </a>
             </div>
           </div>
         </div>
