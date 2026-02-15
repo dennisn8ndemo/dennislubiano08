@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, FileDown } from "lucide-react";
 import profileImage from "@/assets/profile-picture.png";
 import heroBg from "@/assets/hero-bg.jpg";
 import { OrbitingIcons } from "@/components/ui/OrbitingIcons";
@@ -76,6 +76,18 @@ export const HeroSection = () => {
               </div>
               <div className="absolute -top-2 -right-4 bg-card px-4 py-2 rounded-full shadow-card border border-border z-20">
                 <span className="text-sm font-semibold text-secondary">KYC Background</span>
+              </div>
+              
+              {/* Resume Download */}
+              <div className="flex justify-center mt-4 z-20 relative">
+                <a
+                  href="/Dennis_Lubiano_Resume.pdf"
+                  download="Dennis_Lubiano_Resume.pdf"
+                  className="inline-flex items-center gap-2 bg-card px-5 py-2.5 rounded-full shadow-card border border-border hover:border-primary hover:shadow-glow transition-all duration-300"
+                >
+                  <FileDown className="w-4 h-4 text-primary" />
+                  <span className="text-sm font-semibold text-foreground">Download Resume</span>
+                </a>
               </div>
             </div>
           </div>
