@@ -1,25 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 const BookingSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "200px" }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [showCalendly, setShowCalendly] = useState(false);
 
   return (
-    <section id="booking" className="py-20 bg-muted/30" ref={sectionRef}>
+    <section id="booking" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -30,7 +15,7 @@ const BookingSection = () => {
           </p>
         </div>
         <div className="w-full max-w-6xl mx-auto">
-          {isVisible ? (
+          {showCalendly ? (
             <iframe
               src="https://calendly.com/cloudfonenew1990/dennis-lubiano-automation-specialist?hide_gdpr_banner=1"
               width="100%"
@@ -42,8 +27,15 @@ const BookingSection = () => {
               loading="lazy"
             />
           ) : (
-            <div className="h-[700px] rounded-lg bg-muted/50 flex items-center justify-center">
-              <p className="text-muted-foreground">Loading booking calendar...</p>
+            <div
+              className="h-[700px] rounded-lg bg-muted/50 flex flex-col items-center justify-center cursor-pointer hover:bg-muted/70 transition-colors"
+              onClick={() => setShowCalendly(true)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setShowCalendly(true); }}
+            >
+              <p className="text-foreground text-xl font-semibold mb-2">📅 Click to Open Booking Calendar</p>
+              <p className="text-muted-foreground">Click here to load the scheduling widget</p>
             </div>
           )}
         </div>
