@@ -1,8 +1,4 @@
-import { useState } from "react";
-
 const BookingSection = () => {
-  const [showCalendly, setShowCalendly] = useState(false);
-
   return (
     <section id="booking" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -15,29 +11,15 @@ const BookingSection = () => {
           </p>
         </div>
         <div className="w-full max-w-6xl mx-auto">
-          {showCalendly ? (
-            <iframe
-              src="https://calendly.com/cloudfonenew1990/dennis-lubiano-automation-specialist?hide_gdpr_banner=1"
-              width="100%"
-              height="700"
-              frameBorder="0"
-              scrolling="no"
-              title="Schedule a consultation with Dennis Lubiano"
-              className="rounded-lg overflow-hidden"
-              loading="lazy"
-            />
-          ) : (
-            <div
-              className="h-[700px] rounded-lg bg-muted/50 flex flex-col items-center justify-center cursor-pointer hover:bg-muted/70 transition-colors"
-              onClick={() => setShowCalendly(true)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setShowCalendly(true); }}
-            >
-              <p className="text-foreground text-xl font-semibold mb-2">📅 Click to Open Booking Calendar</p>
-              <p className="text-muted-foreground">Click here to load the scheduling widget</p>
-            </div>
-          )}
+          <iframe
+            src="https://calendly.com/cloudfonenew1990/dennis-lubiano-automation-specialist?hide_gdpr_banner=1"
+            width="100%"
+            height="700"
+            frameBorder="0"
+            scrolling="no"
+            title="Schedule a consultation with Dennis Lubiano"
+            className="rounded-lg overflow-hidden"
+          />
         </div>
       </div>
     </section>
