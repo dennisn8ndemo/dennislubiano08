@@ -11,8 +11,6 @@ const BookingSection = lazy(() => import("@/components/sections/BookingSection")
 const ContactSection = lazy(() => import("@/components/sections/ContactSection").then(m => ({ default: m.ContactSection })));
 const RetroBreakSection = lazy(() => import("@/components/sections/RetroBreakSection").then(m => ({ default: m.RetroBreakSection })));
 const ZodiacFortuneSection = lazy(() => import("@/components/sections/ZodiacFortuneSection").then(m => ({ default: m.ZodiacFortuneSection })));
-const ImageGeneratorSection = lazy(() => import("@/components/sections/ImageGeneratorSection").then(m => ({ default: m.ImageGeneratorSection })));
-
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
@@ -28,7 +26,6 @@ const Index = () => {
           <ContactSection />
           <RetroBreakSection />
           <ZodiacFortuneSection />
-          <ImageGeneratorSection />
         </Suspense>
       </main>
       <Footer />
