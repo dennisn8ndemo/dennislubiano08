@@ -34,18 +34,20 @@ export const Navbar = () => {
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <a href="#home" className="text-4xl md:text-5xl font-bold text-gradient">
-          Dennis Lubiano
-        </a>
-        <a
-          href="/Dennis_Lubiano_Resume.pdf"
-          download
-          className="flex items-center gap-2 bg-gradient-accent text-primary-foreground px-4 py-2 rounded-xl font-semibold text-sm hover:scale-105 transition-transform shadow-glow"
-          title="Download My Resume"
-        >
-          <Download size={20} />
-          <span className="hidden sm:inline">Download Resume</span>
-        </a>
+        <div className="flex items-center gap-3">
+          <a href="#home" className="text-4xl md:text-5xl font-bold text-gradient">
+            Dennis Lubiano
+          </a>
+          <a
+            href="/Dennis_Lubiano_Resume.pdf"
+            download
+            className="flex items-center gap-1 bg-gradient-accent text-primary-foreground px-2 py-1 rounded-md font-medium text-xs hover:scale-105 transition-transform"
+            title="Download My Resume"
+          >
+            <Download size={14} />
+            <span className="hidden sm:inline">Resume</span>
+          </a>
+        </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6">
