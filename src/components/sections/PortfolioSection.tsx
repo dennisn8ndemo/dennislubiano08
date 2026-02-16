@@ -27,21 +27,21 @@ const projects = [
   },
   {
     id: 3,
-    title: "Xero Bank Statements to Asana",
-    description: "Automated workflow to process Xero bank statements and create tasks in Asana for reconciliation.",
-    platform: "make" as Platform,
-    videoUrl: "/videos/make-xero-asana.mp4",
-    tools: ["Make.com", "Xero", "Asana", "Financial Automation"],
-    impact: "Reduced accounting reconciliation time by 80%",
-  },
-  {
-    id: 4,
     title: "ASMR Video Maker Automation",
     description: "Automated ASMR video creation pipeline using n8n for content generation and publishing.",
     platform: "n8n" as Platform,
     videoUrl: "/videos/n8n-asmr-maker.mp4",
     tools: ["n8n", "Video Processing", "Content Automation"],
     impact: "Automated content creation pipeline saving 20+ hours weekly",
+  },
+  {
+    id: 4,
+    title: "Xero Bank Statements to Asana",
+    description: "Automated workflow to process Xero bank statements and create tasks in Asana for reconciliation.",
+    platform: "make" as Platform,
+    videoUrl: "/videos/make-xero-asana.mp4",
+    tools: ["Make.com", "Xero", "Asana", "Financial Automation"],
+    impact: "Reduced accounting reconciliation time by 80%",
   },
 ];
 
