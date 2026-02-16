@@ -9,12 +9,12 @@ type ReactionType = "like" | "heart" | "wow";
 const projects = [
   {
     id: 1,
-    title: "ASMR Video Maker Automation",
-    description: "Automated ASMR video creation pipeline using n8n for content generation and publishing.",
+    title: "Google Ads Daily Report",
+    description: "Automated daily reporting workflow that pulls Google Ads performance data and generates comprehensive reports.",
     platform: "n8n" as Platform,
-    videoUrl: "/videos/n8n-asmr-maker.mp4",
-    tools: ["n8n", "Video Processing", "Content Automation"],
-    impact: "Automated content creation pipeline saving 20+ hours weekly",
+    videoUrl: "/videos/n8n-google-ads-report.mp4",
+    tools: ["n8n", "Google Ads API", "Automated Reporting"],
+    impact: "Automated daily ad performance tracking saving hours of manual work",
   },
   {
     id: 2,
@@ -36,12 +36,12 @@ const projects = [
   },
   {
     id: 4,
-    title: "Google Ads Daily Report",
-    description: "Automated daily reporting workflow that pulls Google Ads performance data and generates comprehensive reports.",
+    title: "ASMR Video Maker Automation",
+    description: "Automated ASMR video creation pipeline using n8n for content generation and publishing.",
     platform: "n8n" as Platform,
-    videoUrl: "/videos/n8n-google-ads-report.mp4",
-    tools: ["n8n", "Google Ads API", "Automated Reporting"],
-    impact: "Automated daily ad performance tracking saving hours of manual work",
+    videoUrl: "/videos/n8n-asmr-maker.mp4",
+    tools: ["n8n", "Video Processing", "Content Automation"],
+    impact: "Automated content creation pipeline saving 20+ hours weekly",
   },
 ];
 
