@@ -1,10 +1,10 @@
 import { lazy, Suspense } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { AboutSection } from "@/components/sections/AboutSection";
-import { ServicesSection } from "@/components/sections/ServicesSection";
 import { Footer } from "@/components/layout/Footer";
 
+const AboutSection = lazy(() => import("@/components/sections/AboutSection").then(m => ({ default: m.AboutSection })));
+const ServicesSection = lazy(() => import("@/components/sections/ServicesSection").then(m => ({ default: m.ServicesSection })));
 const PortfolioSection = lazy(() => import("@/components/sections/PortfolioSection").then(m => ({ default: m.PortfolioSection })));
 const TestimonialsSection = lazy(() => import("@/components/sections/TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
 const BookingSection = lazy(() => import("@/components/sections/BookingSection").then(m => ({ default: m.BookingSection })));
@@ -19,9 +19,9 @@ const Index = () => {
       <Navbar />
       <main>
         <HeroSection />
-        <AboutSection />
-        <ServicesSection />
         <Suspense fallback={null}>
+          <AboutSection />
+          <ServicesSection />
           <PortfolioSection />
           <TestimonialsSection />
           <BookingSection />
