@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 // AI/Automation tool icons as SVG paths
 const aiTools = [
   {
@@ -71,17 +69,9 @@ interface OrbitingIconsProps {
 }
 
 export const OrbitingIcons = ({ size = 320 }: OrbitingIconsProps) => {
-  const [rotation, setRotation] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRotation((prev) => (prev + 0.5) % 360);
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
-
   const orbitRadius = size / 2 + 50;
   const iconSize = 40;
+  const totalIcons = aiTools.length;
 
   return (
     <div
@@ -116,29 +106,44 @@ export const OrbitingIcons = ({ size = 320 }: OrbitingIconsProps) => {
         }}
       />
 
-      {/* Orbiting icons */}
-      {aiTools.map((tool, index) => {
-        const angle = (rotation + (index * 360) / aiTools.length) * (Math.PI / 180);
-        const x = Math.cos(angle) * orbitRadius;
-        const y = Math.sin(angle) * orbitRadius;
+      {/* Single rotating container for all icons */}
+      <div
+        className="absolute"
+        style={{
+          width: orbitRadius * 2,
+          height: orbitRadius * 2,
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          animation: "orbit-spin 30s linear infinite",
+        }}
+      >
+        {aiTools.map((tool, index) => {
+          const angleDeg = (index * 360) / totalIcons;
+          const angleRad = angleDeg * (Math.PI / 180);
+          const x = Math.cos(angleRad) * orbitRadius;
+          const y = Math.sin(angleRad) * orbitRadius;
 
-        return (
-          <div
-            key={tool.name}
-            className="absolute flex items-center justify-center bg-card rounded-full shadow-lg border border-border transition-all duration-300 hover:scale-125"
-            style={{
-              width: iconSize,
-              height: iconSize,
-              left: `calc(50% + ${x}px - ${iconSize / 2}px)`,
-              top: `calc(50% + ${y}px - ${iconSize / 2}px)`,
-              color: tool.color,
-            }}
-            title={tool.name}
-          >
-            <div className="w-6 h-6">{tool.icon}</div>
-          </div>
-        );
-      })}
+          return (
+            <div
+              key={tool.name}
+              className="absolute flex items-center justify-center bg-card rounded-full shadow-lg border border-border"
+              style={{
+                width: iconSize,
+                height: iconSize,
+                left: `calc(50% + ${x}px - ${iconSize / 2}px)`,
+                top: `calc(50% + ${y}px - ${iconSize / 2}px)`,
+                color: tool.color,
+                // Counter-rotate to keep icons upright
+                animation: "orbit-counter-spin 30s linear infinite",
+              }}
+              title={tool.name}
+            >
+              <div className="w-6 h-6">{tool.icon}</div>
+            </div>
+          );
+        })}
+      </div>
 
       {/* Center glow effect */}
       <div
@@ -151,6 +156,17 @@ export const OrbitingIcons = ({ size = 320 }: OrbitingIconsProps) => {
           transform: "translate(-50%, -50%)",
         }}
       />
+
+      <style>{`
+        @keyframes orbit-spin {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes orbit-counter-spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(-360deg); }
+        }
+      `}</style>
     </div>
   );
 };
