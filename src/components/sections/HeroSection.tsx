@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
-import profileImage from "@/assets/profile-picture.png";
+import profileImage from "@/assets/profile-picture.webp";
 import heroBg from "@/assets/hero-bg.jpg";
 import { OrbitingIcons } from "@/components/ui/OrbitingIcons";
 
@@ -67,6 +67,9 @@ export const HeroSection = () => {
                   src={profileImage}
                   alt="Dennis Lubiano - Automation Specialist"
                   className="w-full h-full object-cover"
+                  width={320}
+                  height={320}
+                  fetchPriority="high"
                 />
               </div>
               
