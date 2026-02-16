@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
-import profileImage from "@/assets/profile-picture.webp";
+const profileImage = "/profile-picture.webp";
 import heroBg from "@/assets/hero-bg.jpg";
 import { OrbitingIcons } from "@/components/ui/OrbitingIcons";
 
