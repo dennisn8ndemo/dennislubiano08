@@ -89,6 +89,8 @@ const getStoredReactions = (): Reactions => {
     2: { like: 31, heart: 22, wow: 14 },
     3: { like: 19, heart: 15, wow: 7 },
     4: { like: 12, heart: 8, wow: 5 },
+    5: { like: 27, heart: 20, wow: 11 },
+    6: { like: 16, heart: 13, wow: 8 },
   };
 };
 

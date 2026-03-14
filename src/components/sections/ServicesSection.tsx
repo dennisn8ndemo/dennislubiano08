@@ -31,9 +31,9 @@ const services = [
   },
   {
     icon: FolderKanban,
-    title: "Project Management",
-    description: "Streamline project workflows and team communication to boost productivity.",
-    tools: ["Asana", "Monday.com", "GoHighLevel", "Slack"],
+    title: "Enrichment & Lead Gen",
+    description: "Automated data enrichment and lead generation with high accuracy, ensuring deliverable emails and verified contact information.",
+    tools: ["Apollo.io", "Hunter.io", "Clay", "Data Validation"],
     gradient: "bg-gradient-accent",
   },
   {
