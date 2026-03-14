@@ -43,6 +43,24 @@ const projects = [
     tools: ["Make.com", "Xero", "Asana", "Financial Automation"],
     impact: "Reduced accounting reconciliation time by 80%",
   },
+  {
+    id: 5,
+    title: "Enrichment & Lead Generation",
+    description: "Automated data enrichment pipeline ensuring deliverable emails and accurate contact info for high-quality lead generation.",
+    platform: "other" as Platform,
+    videoUrl: "/videos/enrichment-lead-generation.mp4",
+    tools: ["Apollo.io", "Hunter.io", "Data Enrichment", "Lead Gen"],
+    impact: "Achieved 95%+ email deliverability with verified contact data",
+  },
+  {
+    id: 6,
+    title: "Portfolio Website with AI Chatbot",
+    description: "Built a portfolio website with an integrated AI chatbot for automated lead generation and visitor engagement.",
+    platform: "other" as Platform,
+    videoUrl: "/videos/replit-portfolio-ai-chatbot.mp4",
+    tools: ["Replit", "AI Chatbot", "Lead Generation", "Web Dev"],
+    impact: "Automated visitor engagement and lead capture 24/7",
+  },
 ];
 
 const filters: { label: string; value: Platform }[] = [
@@ -71,6 +89,8 @@ const getStoredReactions = (): Reactions => {
     2: { like: 31, heart: 22, wow: 14 },
     3: { like: 19, heart: 15, wow: 7 },
     4: { like: 12, heart: 8, wow: 5 },
+    5: { like: 27, heart: 20, wow: 11 },
+    6: { like: 16, heart: 13, wow: 8 },
   };
 };
 
