@@ -10,16 +10,6 @@ export const HeroSection = () => {
       id="home"
       className="min-h-screen flex items-center relative overflow-hidden pt-20"
     >
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-25"
-      >
-        <source src="/videos/hero-bg-video.mp4" type="video/mp4" />
-      </video>
       
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-hero" />
