@@ -40,6 +40,7 @@ const Index = () => {
         </Suspense>
       </main>
       <Footer />
+      </div>
     </div>
   );
 };
