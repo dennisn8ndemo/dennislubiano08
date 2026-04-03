@@ -13,7 +13,18 @@ const RetroBreakSection = lazy(() => import("@/components/sections/RetroBreakSec
 const ZodiacFortuneSection = lazy(() => import("@/components/sections/ZodiacFortuneSection").then(m => ({ default: m.ZodiacFortuneSection })));
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Fixed Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="fixed inset-0 w-full h-full object-cover opacity-20 z-0"
+      >
+        <source src="/videos/hero-bg-video.mp4" type="video/mp4" />
+      </video>
+      <div className="relative z-10">
       <Navbar />
       <main>
         <HeroSection />
