@@ -62,7 +62,7 @@ export const Navbar = () => {
           ))}
           <ThemeToggle />
           <Button variant="hero" size="lg" asChild>
-            <a href="#contact">$10/hr Part-time, Full-Time & One-Time Gigs</a>
+            <a href="#contact">Get in Touch</a>
           </Button>
         </div>
 
